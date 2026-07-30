@@ -1,0 +1,6 @@
+{
+  "name": "Carnatic Swara Digitizer",
+  "description": "Smart OCR digitizer for handwritten and printed Carnatic music swara structures, Ragas, short phrases, and Adi Thala two-kalai charts with PDF and Excel export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
