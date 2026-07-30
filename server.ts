@@ -8,7 +8,18 @@ async function startServer() {
   const PORT = 3000;
 
   // Increase payload size limit for image uploads
-  app.use(express.json({ limit: '25mb' }));
+  app.use(express.json({ limit: '50mb' }));
+  
+  // Handle JSON parsing errors and payload too large
+  app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+    if (err instanceof SyntaxError && (err as any).status === 400 && 'body' in err) {
+      return res.status(400).json({ success: false, error: 'Invalid JSON payload' });
+    }
+    if (err && err.type === 'entity.too.large') {
+      return res.status(413).json({ success: false, error: 'Image is too large. Please upload a smaller image (under 50MB).' });
+    }
+    next(err);
+  });
 
   // OCR Endpoint for Carnatic Swara Sheets
   app.post('/api/ocr', async (req, res) => {

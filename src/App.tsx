@@ -12,6 +12,7 @@ import { SettingsModal } from './components/SettingsModal';
 import { SwaraStructure } from './types';
 import { SAMPLE_RAGAS } from './data/sampleRagas';
 import { AlertCircle } from 'lucide-react';
+import { saveUploadToFirestore } from './lib/firebase';
 
 export default function App() {
   const [digitizedData, setDigitizedData] = useState<SwaraStructure | null>(null);
@@ -80,6 +81,11 @@ export default function App() {
       if (resData.success && resData.data) {
         incrementUsage();
         setDigitizedData(resData.data);
+        
+        // Save the digitized result to Firestore in the background
+        saveUploadToFirestore(resData.data)
+          .then((id) => console.log('Saved to Firestore with ID:', id))
+          .catch((err) => console.error('Failed to save to Firestore:', err));
       } else {
         throw new Error(resData.error || 'Failed to extract swara structure from image.');
       }
