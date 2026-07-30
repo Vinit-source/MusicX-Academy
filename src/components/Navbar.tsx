@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div>
             <div className="flex items-center space-x-2">
               <h1 className="text-2xl font-normal tracking-wide text-slate-800 font-yatra pt-1">
-                gitaragavidvat
+                gitaragavidvatam
               </h1>
               <span className="bg-emerald-100 text-emerald-700 border border-emerald-200 text-[9px] font-semibold uppercase px-2 py-0.5 rounded-full">
                 Smart OCR

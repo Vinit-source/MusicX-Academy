@@ -1,12 +1,8 @@
 {
-  "projectId": "gen-lang-client-0526608866",
-  "appId": "1:676622630865:web:75f818d3d2fe107d1eaaf0",
-  "apiKey": "AIzaSyCqAvluU4psWnY0wIGnirZxWFygbS4Az8M",
-  "authDomain": "gen-lang-client-0526608866.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-carnaticswaradig-d7e6adc0-02e2-4573-8911-0ffb00bf4831",
-  "storageBucket": "gen-lang-client-0526608866.firebasestorage.app",
-  "messagingSenderId": "676622630865",
-  "measurementId": "",
-  "oAuthClientId": "676622630865-p175uni5jecstpnqm8jkknj734790to9.apps.googleusercontent.com",
-  "recaptchaSiteKey": ""
+  "apiKey": "AIzaSyAsXex3u989Bq0sPp6qtU_ugCr29RI5BH8",
+  "authDomain": "musicx-academy.firebaseapp.com",
+  "projectId": "musicx-academy",
+  "storageBucket": "musicx-academy.firebasestorage.app",
+  "messagingSenderId": "21773060573",
+  "appId": "1:21773060573:web:4b80ff2d4e96ab086f0e34"
 }
