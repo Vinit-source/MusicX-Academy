@@ -13,6 +13,7 @@ import { SwaraStructure } from './types';
 import { SAMPLE_RAGAS } from './data/sampleRagas';
 import { AlertCircle } from 'lucide-react';
 import { saveUploadToFirestore } from './lib/firebase';
+import { extractSwaraFromImage } from './lib/gemini';
 
 export default function App() {
   const [digitizedData, setDigitizedData] = useState<SwaraStructure | null>(null);
@@ -57,40 +58,27 @@ export default function App() {
     setIsLoading(true);
     setError(null);
 
+    if (!apiKey) {
+      setIsLoading(false);
+      setIsSettingsOpen(true);
+      setError('Gemini API key is required. Please set it in settings.');
+      return;
+    }
+
     try {
-      const response = await fetch('/api/ocr', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          imageBase64,
-          mimeType,
-          clientApiKey: apiKey,
-        }),
-      });
-
-      const resData = await response.json();
-
-      if (response.status === 401 && resData.error === 'API_KEY_REQUIRED') {
-        // Deployed outside AI studio and API key is missing
-        setIsSettingsOpen(true);
-        throw new Error('Gemini API key is required. Please set it in settings.');
-      }
-
-      if (resData.success && resData.data) {
-        incrementUsage();
-        setDigitizedData(resData.data);
-        
-        // Save the digitized result to Firestore in the background
-        saveUploadToFirestore(resData.data)
-          .then((id) => console.log('Saved to Firestore with ID:', id))
-          .catch((err) => console.error('Failed to save to Firestore:', err));
-      } else {
-        throw new Error(resData.error || 'Failed to extract swara structure from image.');
-      }
+      const data = await extractSwaraFromImage(imageBase64, mimeType, apiKey);
+      incrementUsage();
+      setDigitizedData(data);
+      
+      // Save the digitized result to Firestore in the background
+      saveUploadToFirestore(data)
+        .then((id) => console.log('Saved to Firestore with ID:', id))
+        .catch((err) => console.error('Failed to save to Firestore:', err));
     } catch (err: any) {
       console.error('OCR Error:', err);
+      if (err.message?.includes('API key not valid') || err.message?.includes('API_KEY_INVALID')) {
+        setIsSettingsOpen(true);
+      }
       setError(err.message || 'An error occurred during image OCR processing.');
     } finally {
       setIsLoading(false);
