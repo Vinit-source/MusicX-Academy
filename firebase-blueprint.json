@@ -1,0 +1,27 @@
+{
+  "entities": {
+    "SwaraUpload": {
+      "title": "SwaraUpload",
+      "description": "Digitized swara sheet notation",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "createdDate": { "type": "string" },
+        "ragaName": { "type": "string" },
+        "parentRaga": { "type": "string" },
+        "remarks": { "type": "string" },
+        "arohanam": { "type": "array" },
+        "avarohanam": { "type": "array" },
+        "shortPhrases": { "type": "array" },
+        "adiThalaRows": { "type": "array" },
+        "createdAt": { "type": "timestamp" }
+      }
+    }
+  },
+  "firestore": {
+    "/swara_uploads/{uploadId}": {
+      "schema": { "$ref": "#/entities/SwaraUpload" },
+      "description": "Uploads of digitized swara sheets"
+    }
+  }
+}
